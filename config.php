@@ -1,13 +1,19 @@
 <?php
-$db_host = getenv('DB_HOST');
-$db_port = getenv('DB_PORT');
-$db_user = getenv('DB_USER');
-$db_pass = getenv('DB_PASS');
-$db_name = getenv('DB_NAME');
+// config.php - Postgres via environment variables (PDO)
+$db_host = getenv('DB_HOST') ?: 'localhost';
+$db_port = getenv('DB_PORT') ?: '5432';
+$db_name = getenv('DB_NAME') ?: 'todo';
+$db_user = getenv('DB_USER') ?: 'postgres';
+$db_pass = getenv('DB_PASS') ?: '';
 
-$db = pg_connect("host=$db_host port=$db_port dbname=$db_name user=$db_user password=$db_pass");
+$dsn = "pgsql:host={$db_host};port={$db_port};dbname={$db_name}";
 
-if (!$db) {
-    die("Connection failed: " . pg_last_error());
+try {
+    $db = new PDO($dsn, $db_user, $db_pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    ]);
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
 }
 ?>
+

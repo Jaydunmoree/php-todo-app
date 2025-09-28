@@ -7,4 +7,3 @@ CREATE TABLE IF NOT EXISTS task (
 INSERT INTO task (task, status) VALUES
 ('Read an article on React.js', 'Done'),
 ('Organize a meeting', 'Pending');
-
