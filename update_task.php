@@ -3,14 +3,13 @@
 <?php
 require_once 'config.php';
 
-if ($_GET['task_id'] != "") {
-    $task_id = $_GET['task_id'];
+if (isset($_GET['task_id']) && $_GET['task_id'] !== '') {
+    $task_id = (int) $_GET['task_id'];
 
-    $updatingtasks = 
-          mysqli_query($db, 
-            "UPDATE `task` SET `status` = 'Done' WHERE `task_id` = $task_id")
-        or
-        die(mysqli_error($db));
-    header('location: index.php');
+    $stmt = $db->prepare("UPDATE task SET status = 'Done' WHERE task_id = :id");
+    $stmt->execute([':id' => $task_id]);
+
+    header('Location: index.php');
+    exit;
 }
 ?>
