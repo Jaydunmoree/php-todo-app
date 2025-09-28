@@ -1,3 +1,7 @@
+<?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+ini_set('display_errors', 0);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,16 +36,16 @@
         $stmt = $db->query("SELECT * FROM tasks ORDER BY id ASC");
         $count = 1;
         while ($fetch = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            ?>
+        ?>
         <tr class="border-bottom">
           <td><?php echo $count++ ?></td>
           <td><?php echo htmlspecialchars($fetch['task']) ?></td>
           <td><?php echo htmlspecialchars($fetch['status']) ?></td>
           <td colspan="2" class="action">
             <?php if ($fetch['status'] != "Done"): ?>
-              <a href="update_task.php?task_id=<?php echo (int)$fetch['task_id'] ?>" class="btn-completed">✔</a>
+              <a href="update_task.php?task_id=<?php echo (int)$fetch['id'] ?>" class="btn-completed">✔</a>
             <?php endif; ?>
-            <a href="delete_task.php?task_id=<?php echo (int)$fetch['task_id'] ?>" class="btn-remove">❌</a>
+            <a href="delete_task.php?task_id=<?php echo (int)$fetch['id'] ?>" class="btn-remove">❌</a>
           </td>
         </tr>
         <?php
@@ -52,3 +56,4 @@
   </div>
 </body>
 </html>
+
