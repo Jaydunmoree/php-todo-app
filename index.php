@@ -29,7 +29,7 @@
         <?php
         require 'config.php';
 
-        $stmt = $db->query("SELECT * FROM task ORDER BY task_id ASC");
+        $stmt = $db->query("SELECT * FROM tasks ORDER BY id ASC");
         $count = 1;
         while ($fetch = $stmt->fetch(PDO::FETCH_ASSOC)) {
             ?>
